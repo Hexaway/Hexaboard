@@ -2,7 +2,7 @@ package net.hexaway.board.util;
 
 import org.bukkit.ChatColor;
 
-public final class TextDecorator {
+public final class TextUtils {
 
     public static String replaceColorChar(String text) {
         return text.replace(ChatColor.COLOR_CHAR + "", "&");
