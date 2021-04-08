@@ -40,23 +40,6 @@ public class YamlScoreboardModelRepository implements Repository<ScoreboardModel
     }
 
     @Override
-    public void create(String id, ScoreboardModel object) {
-        try {
-            File file = new File(folder, id.endsWith(".yml") ? id : id + ".yml");
-
-            if (!file.exists()) {
-                if (file.createNewFile()) {
-                    YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);
-
-                    save(file, YamlConfiguration.loadConfiguration(file), object);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void save(String id, ScoreboardModel object) {
         try {
             File file = new File(folder, id.endsWith(".yml") ? id : id + ".yml");
