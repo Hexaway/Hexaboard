@@ -42,3 +42,4 @@ hs_err_pid*
 Hexaboard.iml
 /target/
 Serialization/Serialization.iml
+.idea/libraries/Maven__me_clip_placeholderapi_2_9_2.xml
