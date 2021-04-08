@@ -5,7 +5,7 @@ import net.hexaway.board.abstraction.Title;
 import net.hexaway.board.animation.DynamicScoreboardLine;
 import net.hexaway.board.animation.DynamicTitle;
 import net.hexaway.board.util.ArrayUtils;
-import net.hexaway.board.util.TextDecorator;
+import net.hexaway.board.util.TextUtils;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.util.NumberConversions;
 
@@ -22,7 +22,7 @@ public class AnimatableObjectModel implements ConfigurationSerializable {
     protected final boolean colorize;
 
     public AnimatableObjectModel(int updateTime, boolean colorize, String... text) {
-        this.text = colorize ? TextDecorator.color(text) : text;
+        this.text = colorize ? TextUtils.color(text) : text;
         this.updateTime = updateTime;
         this.colorize = colorize;
     }
@@ -46,7 +46,7 @@ public class AnimatableObjectModel implements ConfigurationSerializable {
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> objectMap = new HashMap<>();
-        objectMap.put("text", Arrays.asList(TextDecorator.replaceColorChar(text)));
+        objectMap.put("text", Arrays.asList(TextUtils.replaceColorChar(text)));
         objectMap.put("updateTime", updateTime);
         objectMap.put("colorize", colorize);
         return objectMap;
