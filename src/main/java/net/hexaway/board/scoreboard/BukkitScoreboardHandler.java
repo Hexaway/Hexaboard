@@ -92,7 +92,6 @@ public final class BukkitScoreboardHandler {
                 return;
 
             ScoreboardTeam scoreboardTeam = new ScoreboardTeam(fullText);
-            String teamText = scoreboardTeam.get();
 
             ScoreboardTeam oldTeam = null;
 
@@ -100,35 +99,7 @@ public final class BukkitScoreboardHandler {
                 oldTeam = new ScoreboardTeam(oldText);
             }
 
-            Team team = scoreboard.getTeam(teamText);
-
-            if (team == null) {
-                team = scoreboard.registerNewTeam(teamText);
-            }
-
-            if (!team.hasEntry(teamText)) {
-                team.addEntry(teamText);
-            }
-
-            if (oldTeam == null) {
-                // if the score of the specified position does not have a text, only the scores will be sent to it, so that the buffer and the displayed objective update their data
-                objectiveSwapper.swapAndRestore((objective) -> scoreAction(null, teamText, pos, ScoreAction.SEND));
-            } else {
-                // so if score of the specified position does have a text, the scores will be replaced (send text after removing old text)
-                // update buffer
-                scoreAction(oldTeam.get(), teamText, pos, ScoreAction.REPLACE);
-
-                //to prevent flicking, display the buffer and swap objectives, the displayed objective is the buffer and the buffer is the displayed objective
-                nmsScoreboardHelper.displayObjective(objectiveSwapper.getHidden());
-                objectiveSwapper.swap();
-
-                scoreAction(oldTeam.get(), teamText, pos, ScoreAction.REPLACE);
-            }
-
-            team.setPrefix(scoreboardTeam.getPrefix());
-            team.setSuffix(scoreboardTeam.getSuffix());
-
-            this.scores.put(pos, fullText);
+            updateScore(fullText, oldTeam, scoreboardTeam, pos);
         }
     }
 
@@ -186,7 +157,48 @@ public final class BukkitScoreboardHandler {
             case REMOVE:
                 nmsScoreboardHelper.sendScore(oldText, pos, true);
                 break;
+            default:
+                break;
         }
+    }
+
+    private void updateScore(String fullText, ScoreboardTeam oldTeam, ScoreboardTeam scoreboardTeam, int pos) {
+        String teamText = scoreboardTeam.get();
+        Team team = getTeam(teamText);
+
+        if (oldTeam == null) {
+            // if the score of the specified position does not have a text, only the scores will be sent to it, so that the buffer and the displayed objective update their data
+            objectiveSwapper.swapAndRestore((objective) -> scoreAction(null, teamText, pos, ScoreAction.SEND));
+        } else {
+            // so if score of the specified position does have a text, the scores will be replaced (send text after removing old text)
+            // update buffer
+            scoreAction(oldTeam.get(), teamText, pos, ScoreAction.REPLACE);
+
+            //to prevent flicking, display the buffer and swap objectives, the displayed objective is the buffer and the buffer is the displayed objective
+            nmsScoreboardHelper.displayObjective(objectiveSwapper.getHidden());
+            objectiveSwapper.swap();
+
+            scoreAction(oldTeam.get(), teamText, pos, ScoreAction.REPLACE);
+        }
+
+        team.setPrefix(scoreboardTeam.getPrefix());
+        team.setSuffix(scoreboardTeam.getSuffix());
+
+        this.scores.put(pos, fullText);
+    }
+
+    private Team getTeam(String teamText) {
+        Team team = scoreboard.getTeam(teamText);
+
+        if (team == null) {
+            team = scoreboard.registerNewTeam(teamText);
+        }
+
+        if (!team.hasEntry(teamText)) {
+            team.addEntry(teamText);
+        }
+
+        return team;
     }
 
     private boolean checkHelper() {
