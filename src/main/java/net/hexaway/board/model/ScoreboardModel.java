@@ -33,7 +33,7 @@ public final class ScoreboardModel {
     }
 
     public Map<Integer, AnimatableObjectModel> getLines() {
-        return lines;
+        return Collections.unmodifiableMap(lines);
     }
 
     public List<ScoreboardLine> getScoreboardLines() {
