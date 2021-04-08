@@ -34,8 +34,8 @@ public class DefaultScoreboardModelDeserializer implements ScoreboardModelDeseri
 
         Map<String, Object> lines = asMap(dataType.get("lines"));
 
-        for (Object value : lines.values().stream().filter(o -> o instanceof AnimatedLineModel).collect(Collectors.toList())) {
-            AnimatedLineModel animatedLineModel = (AnimatedLineModel) value;
+        for (Object value : lines.values().stream().filter(o -> o instanceof Map || o instanceof ConfigurationSection).collect(Collectors.toList())) {
+            AnimatedLineModel animatedLineModel = AnimatedLineModel.deserialize(asMap(value));
 
             if (animatedLineModel != null) {
                 builder.addLine(animatedLineModel.getPosition(), animatedLineModel);

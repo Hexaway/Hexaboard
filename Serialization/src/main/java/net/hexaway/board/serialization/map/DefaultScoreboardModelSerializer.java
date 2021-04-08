@@ -12,7 +12,11 @@ public class DefaultScoreboardModelSerializer extends ScoreboardModelSerializer<
     public Map<String, Object> serializeBoard(ScoreboardModel scoreboardContext) {
         Map<String, Object> objectMap = new HashMap<>();
         objectMap.put("title", scoreboardContext.getTitle());
-        objectMap.put("lines", scoreboardContext.getLines());
+
+        Map<String, Object> lines = new HashMap<>();
+        scoreboardContext.getLines().forEach((k, v) -> lines.put(k.toString(), v.serialize()));
+
+        objectMap.put("lines", lines);
         objectMap.put("id", scoreboardContext.getId());
         return objectMap;
     }
