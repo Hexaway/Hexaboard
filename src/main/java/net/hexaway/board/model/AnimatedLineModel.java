@@ -1,6 +1,5 @@
 package net.hexaway.board.model;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.util.NumberConversions;
 
