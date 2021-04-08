@@ -8,7 +8,6 @@ import net.hexaway.board.animation.DynamicScoreboardLine;
 import net.hexaway.board.model.ScoreboardModel;
 import net.hexaway.board.scoreboard.BukkitScoreboardHandler;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.*;
