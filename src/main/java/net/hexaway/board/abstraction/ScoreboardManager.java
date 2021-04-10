@@ -52,7 +52,7 @@ public interface ScoreboardManager {
 
     boolean exists(String id);
 
-    Repository getScoreboardRepository();
+    Repository<ScoreboardModel> getScoreboardRepository();
 
     void saveModels();
 
