@@ -8,6 +8,7 @@ import net.hexaway.board.animation.DynamicScoreboardLine;
 import net.hexaway.board.model.ScoreboardModel;
 import net.hexaway.board.scoreboard.BukkitScoreboardHandler;
 import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -28,6 +29,8 @@ public class SimpleHexaBoardImpl implements HexaBoard {
 
     private boolean displayed;
 
+    private boolean deleted;
+
     public SimpleHexaBoardImpl(ScoreboardModel scoreboardModel, ScoreboardManager scoreboardManager, Player player) {
         Validate.notNull(scoreboardModel, "scoreboardModel");
         Validate.notNull(scoreboardManager, "scoreboardManager");
@@ -46,6 +49,11 @@ public class SimpleHexaBoardImpl implements HexaBoard {
 
     @Override
     public void setTitle(Title title) {
+        checkPlayerStatus();
+
+        if (deleted)
+            return;
+
         Validate.notNull(title);
 
         this.title = title;
@@ -80,6 +88,11 @@ public class SimpleHexaBoardImpl implements HexaBoard {
 
     @Override
     public void removeLine(int pos) {
+        checkPlayerStatus();
+
+        if (deleted)
+            return;
+
         ScoreboardLine scoreboardLine = lines.get(pos);
 
         if (scoreboardLine == null || scoreboardLine.position() != pos)
@@ -113,7 +126,7 @@ public class SimpleHexaBoardImpl implements HexaBoard {
 
     @Override
     public void setScoreboard() {
-        if (!displayed) {
+        if (!displayed && !deleted) {
             bukkitScoreboardHandler.sendScoreboard();
             displayed = true;
         }
@@ -121,12 +134,21 @@ public class SimpleHexaBoardImpl implements HexaBoard {
 
     @Override
     public void delete() {
-        bukkitScoreboardHandler.delete();
-        scoreboardManager.unregisterScoreboard(uuid);
+        if (!deleted) {
+            bukkitScoreboardHandler.delete();
+            scoreboardManager.unregisterScoreboard(uuid);
+
+            this.deleted = true;
+        }
     }
 
     @Override
     public void update() {
+        checkPlayerStatus();
+
+        if (deleted)
+            return;
+
         title.update();
 
         Set<ScoreboardLine> lines = new HashSet<>(this.lines.values());
@@ -138,11 +160,24 @@ public class SimpleHexaBoardImpl implements HexaBoard {
     }
 
     private void set(ScoreboardLine scoreboardLine) {
+        checkPlayerStatus();
+
+        if (deleted)
+            return;
+
         int pos = scoreboardLine.position();
 
         Validate.notNull(scoreboardLine.get(), "line text cannot be null");
         Validate.isTrue(pos > -1 && pos < 15, "out of range (pos=" + pos + "/15)");
 
         this.lines.put(pos, scoreboardLine);
+    }
+
+    private void checkPlayerStatus() {
+        Player player = Bukkit.getPlayer(uuid);
+
+        if ((player == null || player.isOnline()) && !deleted) {
+            delete();
+        }
     }
 }
