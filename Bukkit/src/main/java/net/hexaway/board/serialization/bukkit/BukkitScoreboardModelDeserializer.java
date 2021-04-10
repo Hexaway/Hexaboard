@@ -10,7 +10,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DefaultScoreboardModelDeserializer implements ScoreboardModelDeserializer<Map<String, Object>> {
+public class BukkitScoreboardModelDeserializer implements ScoreboardModelDeserializer<Map<String, Object>> {
 
     @Override
     public ScoreboardModel deserializeBoard(Map<String, Object> dataType) throws IllegalArgumentException {
