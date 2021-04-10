@@ -2,7 +2,6 @@ package net.hexaway.board.serialization.map;
 
 import net.hexaway.board.repository.serialization.ScoreboardModelDeserializer;
 import net.hexaway.board.builder.ScoreboardModelBuilder;
-import net.hexaway.board.exception.BoardSerializationException;
 import net.hexaway.board.model.AnimatableObjectModel;
 import net.hexaway.board.model.AnimatedLineModel;
 import net.hexaway.board.model.ScoreboardModel;
@@ -14,12 +13,9 @@ import java.util.stream.Collectors;
 public class DefaultScoreboardModelDeserializer implements ScoreboardModelDeserializer<Map<String, Object>> {
 
     @Override
-    public ScoreboardModel deserializeBoard(Map<String, Object> dataType) throws BoardSerializationException {
-        if (!dataType.containsKey("id")) {
-            throw new BoardSerializationException("id");
-        } else if (!dataType.containsKey("lines")) {
-            throw new BoardSerializationException("lines");
-        }
+    public ScoreboardModel deserializeBoard(Map<String, Object> dataType) throws IllegalArgumentException {
+        if (!dataType.containsKey("id"))
+            throw new IllegalArgumentException("dataType does not have id key");
 
         String id = (String) dataType.get("id");
 
@@ -52,7 +48,7 @@ public class DefaultScoreboardModelDeserializer implements ScoreboardModelDeseri
             return ((ConfigurationSection) o).getValues(true);
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("unexpected value");
     }
 
     private AnimatableObjectModel asAnimatableObject(Object o) {
@@ -64,6 +60,6 @@ public class DefaultScoreboardModelDeserializer implements ScoreboardModelDeseri
             return AnimatableObjectModel.deserialize(((ConfigurationSection) o).getValues(true));
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("unexpected value");
     }
 }
