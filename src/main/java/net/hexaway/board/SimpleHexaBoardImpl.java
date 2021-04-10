@@ -14,6 +14,8 @@ import java.util.*;
 
 public class SimpleHexaBoardImpl implements HexaBoard {
 
+    private final ScoreboardModel model;
+
     protected final BukkitScoreboardHandler bukkitScoreboardHandler;
 
     private final ScoreboardManager scoreboardManager;
@@ -26,32 +28,20 @@ public class SimpleHexaBoardImpl implements HexaBoard {
 
     private boolean displayed;
 
-    private ScoreboardModel model;
-
-    public SimpleHexaBoardImpl(Title title, ScoreboardManager scoreboardManager, Player player) {
-        this.title = title != null ? title : () -> "title";
-        this.uuid = player.getUniqueId();
-
+    public SimpleHexaBoardImpl(ScoreboardModel scoreboardModel, ScoreboardManager scoreboardManager, Player player) {
+        Validate.notNull(scoreboardModel, "scoreboardModel");
         Validate.notNull(scoreboardManager, "scoreboardManager");
+        Validate.notNull(player, "player");
+
+        this.model = scoreboardModel;
+        this.title = scoreboardModel.getTitle().newTitle();
+        this.uuid = player.getUniqueId();
 
         this.lines = new HashMap<>();
         this.bukkitScoreboardHandler = new BukkitScoreboardHandler(this.title.get(), player);
         this.scoreboardManager = scoreboardManager;
-    }
 
-    public SimpleHexaBoardImpl(Title title, List<ScoreboardLine> scoreboardLines, ScoreboardManager scoreboardManager, Player player) {
-        this(title, scoreboardManager, player);
-
-        scoreboardLines.forEach(this::set);
-    }
-
-    public SimpleHexaBoardImpl(ScoreboardModel scoreboardModel, ScoreboardManager scoreboardManager, Player player) {
-        this(
-                scoreboardModel.getTitle().newTitle(),
-                scoreboardModel.getScoreboardLines(),
-                scoreboardManager,
-                player
-        );
+        scoreboardModel.getScoreboardLines().forEach(scoreboardLine -> lines.put(scoreboardLine.position(), scoreboardLine));
     }
 
     @Override
