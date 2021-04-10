@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.hexaway.board.serialization</groupId>
-    <artifactId>Serialization</artifactId>
+    <groupId>net.hexaway.board.serialization.bukkit</groupId>
+    <artifactId>Bukkit</artifactId>
 
     <repositories>
         <repository>

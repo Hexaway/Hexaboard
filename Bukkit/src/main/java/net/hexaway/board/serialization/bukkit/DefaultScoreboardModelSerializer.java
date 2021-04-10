@@ -1,4 +1,4 @@
-package net.hexaway.board.serialization.map;
+package net.hexaway.board.serialization.bukkit;
 
 import net.hexaway.board.repository.serialization.ScoreboardModelSerializer;
 import net.hexaway.board.model.ScoreboardModel;
