@@ -1,11 +1,9 @@
 package net.hexaway.board.model;
 
-import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.util.NumberConversions;
 
 import java.util.Map;
 
-@SerializableAs("AnimatedLine")
 public class AnimatedLineModel extends AnimatableObjectModel {
 
     private final int position;
