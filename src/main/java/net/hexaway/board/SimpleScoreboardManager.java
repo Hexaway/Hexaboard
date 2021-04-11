@@ -183,7 +183,7 @@ public class SimpleScoreboardManager implements ScoreboardManager {
     }
 
     private void updateScoreboards() {
-        this.scoreboardMap.values().forEach(HexaBoard::update);
+        new HashSet<>(this.scoreboardMap.values()).forEach(HexaBoard::update);
     }
 
     private boolean checkPlaceholderAPI(boolean b) {
