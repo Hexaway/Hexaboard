@@ -6,7 +6,7 @@ import net.hexaway.board.model.ScoreboardModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BukkitScoreboardModelSerializer extends ScoreboardModelSerializer<Map<String, Object>> {
+public class BukkitScoreboardModelSerializer implements ScoreboardModelSerializer<Map<String, Object>> {
 
     @Override
     public Map<String, Object> serializeBoard(ScoreboardModel scoreboardModel) {
