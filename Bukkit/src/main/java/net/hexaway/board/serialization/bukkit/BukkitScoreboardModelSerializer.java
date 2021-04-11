@@ -9,15 +9,15 @@ import java.util.Map;
 public class BukkitScoreboardModelSerializer extends ScoreboardModelSerializer<Map<String, Object>> {
 
     @Override
-    public Map<String, Object> serializeBoard(ScoreboardModel scoreboardContext) {
+    public Map<String, Object> serializeBoard(ScoreboardModel scoreboardModel) {
         Map<String, Object> objectMap = new HashMap<>();
-        objectMap.put("title", scoreboardContext.getTitle());
+        objectMap.put("title", scoreboardModel.getTitle().serialize());
 
         Map<String, Object> lines = new HashMap<>();
-        scoreboardContext.getLines().forEach((k, v) -> lines.put(k.toString(), v.serialize()));
+        scoreboardModel.getLines().forEach((k, v) -> lines.put(k.toString(), v.serialize()));
 
         objectMap.put("lines", lines);
-        objectMap.put("id", scoreboardContext.getId());
+        objectMap.put("id", scoreboardModel.getId());
         return objectMap;
     }
 }
