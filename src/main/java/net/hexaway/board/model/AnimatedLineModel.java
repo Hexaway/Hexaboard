@@ -1,5 +1,6 @@
 package net.hexaway.board.model;
 
+import net.hexaway.board.abstraction.ScoreboardLine;
 import org.bukkit.util.NumberConversions;
 
 import java.util.Map;
@@ -20,6 +21,10 @@ public class AnimatedLineModel extends AnimatableObjectModel {
 
     public int getPosition() {
         return position;
+    }
+
+    public ScoreboardLine newLine() {
+        return newLine(position);
     }
 
     @Override
