@@ -9,7 +9,7 @@ public final class ScoreboardModel {
 
     private final AnimatableObjectModel title;
 
-    private final Map<Integer, AnimatableObjectModel> lines;
+    private final Map<Integer, AnimatedLineModel> lines;
 
     private final String id;
 
@@ -32,7 +32,7 @@ public final class ScoreboardModel {
         return title;
     }
 
-    public Map<Integer, AnimatableObjectModel> getLines() {
+    public Map<Integer, AnimatedLineModel> getLines() {
         return Collections.unmodifiableMap(lines);
     }
 
@@ -40,11 +40,11 @@ public final class ScoreboardModel {
         List<ScoreboardLine> scoreboardLines = new ArrayList<>();
 
         int i = 0;
-        for (Map.Entry<Integer, AnimatableObjectModel> entry : getLines().entrySet()) {
+        for (Map.Entry<Integer, AnimatedLineModel> entry : lines.entrySet()) {
             if (i >= 15)
                 break;
 
-            scoreboardLines.add(entry.getValue().newLine(entry.getKey()));
+            scoreboardLines.add(entry.getValue().newLine());
             i++;
         }
 
