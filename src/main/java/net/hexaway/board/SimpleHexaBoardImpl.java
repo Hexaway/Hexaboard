@@ -176,7 +176,7 @@ public class SimpleHexaBoardImpl implements HexaBoard {
     private void checkPlayerStatus() {
         Player player = Bukkit.getPlayer(uuid);
 
-        if ((player == null || player.isOnline()) && !deleted) {
+        if ((player == null || !player.isOnline()) && !deleted) {
             delete();
         }
     }
