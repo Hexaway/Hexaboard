@@ -44,3 +44,7 @@ Hexaboard.iml
 Serialization/Serialization.iml
 .idea/libraries/Maven__me_clip_placeholderapi_2_9_2.xml
 Bukkit/Bukkit.iml
+.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_9_0.xml
+.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_9_6.xml
+.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_9_6.xml
+Json/Json.iml
