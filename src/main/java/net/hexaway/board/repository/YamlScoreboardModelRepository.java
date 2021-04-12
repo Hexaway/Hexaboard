@@ -28,15 +28,22 @@ public class YamlScoreboardModelRepository implements Repository<ScoreboardModel
             ScoreboardModelSerializer<Map<String, Object>> scoreboardModelSerializer,
             ScoreboardModelDeserializer<Map<String, Object>> scoreboardModelDeserializer
     ) {
-        Validate.notNull(folder);
+        Validate.notNull(scoreboardModelSerializer, "scoreboardModelSerializer");
+        Validate.notNull(scoreboardModelDeserializer, "scoreboardModelDeserializer");
+        Validate.notNull(javaPlugin);
+        Validate.notNull(folder, "folder");
 
-        if (!folder.exists())
-            folder.mkdirs();
-
-        this.folder = folder;
-        this.javaPlugin = javaPlugin;
         this.scoreboardModelSerializer = scoreboardModelSerializer;
         this.scoreboardModelDeserializer = scoreboardModelDeserializer;
+        this.javaPlugin = javaPlugin;
+
+        if (!folder.exists()) {
+            if (!folder.mkdirs()) {
+                throw new UnsupportedOperationException("cannot create directory" + folder.getAbsolutePath());
+            }
+        }
+
+        this.folder = folder;
     }
 
     @Override
