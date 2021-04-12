@@ -135,9 +135,9 @@ public class SimpleScoreboardManager implements ScoreboardManager {
     @Override
     public void registerModel(String id, ScoreboardModel scoreboardModel) {
         Validate.notNull(id, "id");
-        Validate.notNull(scoreboardModel, "hexaBoard");
+        Validate.notNull(scoreboardModel, "scoreboardModel");
 
-        Validate.isTrue(!scoreboardModelMap.containsKey(id), "already exist scoreboard \"" + id + "\"");
+        Validate.isTrue(!scoreboardModelMap.containsKey(id), "already exist scoreboard model \"" + id + "\"");
 
         scoreboardModelMap.put(id, scoreboardModel);
     }
