@@ -89,7 +89,7 @@ public final class BukkitScoreboardHandler {
 
             // returns if the current text equal to an old text in the same position
             if (fullText.equals(oldText))
-                return;
+                continue;
 
             ScoreboardTeam scoreboardTeam = new ScoreboardTeam(fullText);
 
