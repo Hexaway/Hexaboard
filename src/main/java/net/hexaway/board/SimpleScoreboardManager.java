@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SimpleScoreboardManager implements ScoreboardManager {
 
@@ -32,8 +33,8 @@ public class SimpleScoreboardManager implements ScoreboardManager {
         Validate.notNull(scoreboardModelRepository);
 
         this.scoreboardModelRepository = scoreboardModelRepository;
-        this.scoreboardModelMap = new HashMap<>();
-        this.scoreboardMap = new HashMap<>();
+        this.scoreboardModelMap = new ConcurrentHashMap<>();
+        this.scoreboardMap = new ConcurrentHashMap<>();
         this.usePlaceholderAPI = checkPlaceholderAPI(usePlaceholderAPI);
 
         scoreboardModelRepository.findAll().forEach(scoreboardModel ->
@@ -44,8 +45,8 @@ public class SimpleScoreboardManager implements ScoreboardManager {
     }
 
     public SimpleScoreboardManager(JavaPlugin javaPlugin, boolean usePlaceholderAPI) {
-        this.scoreboardModelMap = new HashMap<>();
-        this.scoreboardMap = new HashMap<>();
+        this.scoreboardModelMap = new ConcurrentHashMap<>();
+        this.scoreboardMap = new ConcurrentHashMap<>();
         this.usePlaceholderAPI = checkPlaceholderAPI(usePlaceholderAPI);
 
         this.javaPlugin = javaPlugin;
@@ -106,7 +107,7 @@ public class SimpleScoreboardManager implements ScoreboardManager {
 
     @Override
     public Set<ScoreboardModel> getModels() {
-        return Collections.unmodifiableSet(new HashSet<>(scoreboardModelMap.values()));
+        return new HashSet<>(scoreboardModelMap.values());
     }
 
     @Override
@@ -183,7 +184,9 @@ public class SimpleScoreboardManager implements ScoreboardManager {
     }
 
     private void updateScoreboards() {
-        new HashSet<>(this.scoreboardMap.values()).forEach(HexaBoard::update);
+        for (HexaBoard value : scoreboardMap.values()) {
+            value.update();
+        }
     }
 
     private boolean checkPlaceholderAPI(boolean b) {
