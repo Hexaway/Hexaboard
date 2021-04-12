@@ -65,7 +65,7 @@ public class SimpleScoreboardManager implements ScoreboardManager {
             UUID uuid = player.getUniqueId();
 
             if (scoreboardMap.containsKey(uuid))
-                removeScoreboard(player, scoreboardId);
+                removeScoreboard(player);
 
             HexaBoard hexaBoard = new SimpleHexaBoardImpl(scoreboardModel, this, player);
             scoreboardMap.put(player.getUniqueId(), hexaBoard);
@@ -74,10 +74,8 @@ public class SimpleScoreboardManager implements ScoreboardManager {
     }
 
     @Override
-    public void removeScoreboard(Player player, String scoreboardId) {
+    public void removeScoreboard(Player player) {
         Validate.notNull(player, "player cannot be null");
-        if (scoreboardId == null)
-            return;
 
         HexaBoard hexaBoard = scoreboardMap.get(player.getUniqueId());
 
