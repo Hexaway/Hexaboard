@@ -15,11 +15,11 @@ import java.util.*;
 
 public class SimpleHexaBoardImpl implements HexaBoard {
 
-    private final ScoreboardModel model;
+    private ScoreboardModel model;
 
     protected final BukkitScoreboardHandler bukkitScoreboardHandler;
 
-    private final ScoreboardManager scoreboardManager;
+    private ScoreboardManager scoreboardManager;
 
     private final Map<Integer, ScoreboardLine> lines;
 
@@ -45,6 +45,15 @@ public class SimpleHexaBoardImpl implements HexaBoard {
         this.scoreboardManager = scoreboardManager;
 
         scoreboardModel.getScoreboardLines().forEach(scoreboardLine -> lines.put(scoreboardLine.position(), scoreboardLine));
+    }
+
+    public SimpleHexaBoardImpl(Player player) {
+        Validate.notNull(player, "player");
+
+        this.uuid = player.getUniqueId();
+
+        this.lines = new HashMap<>();
+        this.bukkitScoreboardHandler = new BukkitScoreboardHandler("title", player);
     }
 
     @Override
@@ -136,7 +145,9 @@ public class SimpleHexaBoardImpl implements HexaBoard {
     public void delete() {
         if (!deleted) {
             bukkitScoreboardHandler.delete();
-            scoreboardManager.unregisterScoreboard(uuid);
+
+            if (scoreboardManager != null)
+                scoreboardManager.unregisterScoreboard(uuid);
 
             this.deleted = true;
         }
@@ -154,7 +165,7 @@ public class SimpleHexaBoardImpl implements HexaBoard {
         Set<ScoreboardLine> lines = new HashSet<>(this.lines.values());
         lines.forEach(ScoreboardLine::update);
 
-        bukkitScoreboardHandler.setLines(scoreboardManager.usePlaceholderAPI(), lines.toArray(new ScoreboardLine[0]));
+        bukkitScoreboardHandler.setLines(usePlaceholderAPI(), lines.toArray(new ScoreboardLine[0]));
 
         bukkitScoreboardHandler.setTitle(title.get());
     }
@@ -179,5 +190,9 @@ public class SimpleHexaBoardImpl implements HexaBoard {
         if ((player == null || !player.isOnline()) && !deleted) {
             delete();
         }
+    }
+
+    private boolean usePlaceholderAPI() {
+        return scoreboardManager != null && scoreboardManager.usePlaceholderAPI();
     }
 }
