@@ -16,6 +16,8 @@ public interface ScoreboardManager {
 
     void removeScoreboard(Player player);
 
+    void registerScoreboard(UUID uuid, HexaBoard board);
+
     void unregisterScoreboard(UUID uuid);
 
     void registerModel(String id, ScoreboardModel scoreboardModel);
