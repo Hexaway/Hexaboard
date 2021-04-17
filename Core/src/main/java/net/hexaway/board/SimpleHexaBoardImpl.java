@@ -7,7 +7,7 @@ import net.hexaway.board.abstraction.Title;
 import net.hexaway.board.animation.DynamicScoreboardLine;
 import net.hexaway.board.model.ScoreboardModel;
 import net.hexaway.board.scoreboard.BukkitScoreboardHandler;
-import org.apache.commons.lang.Validate;
+import net.hexaway.board.util.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -63,7 +63,7 @@ public class SimpleHexaBoardImpl implements HexaBoard {
         if (deleted)
             return;
 
-        Validate.notNull(title);
+        Validate.notNull(title, "title");
 
         this.title = title;
     }
