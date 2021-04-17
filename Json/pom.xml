@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.hexaway.board.serialization.json</groupId>
+    <groupId>net.hexaway.board.serialization</groupId>
     <artifactId>Json</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -26,10 +26,16 @@
         </dependency>
 
         <dependency>
-            <groupId>net.hexaway.board.serialization.bukkit</groupId>
+            <groupId>net.hexaway.board</groupId>
+            <artifactId>Core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.hexaway.board.serialization</groupId>
             <artifactId>Bukkit</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
