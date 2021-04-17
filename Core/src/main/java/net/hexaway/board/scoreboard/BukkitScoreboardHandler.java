@@ -70,7 +70,7 @@ public final class BukkitScoreboardHandler {
         nmsScoreboardHelper.sendObjectiveChange(hidden, 2);
     }
 
-    public void setLines(boolean usePlaceholderAPI, ScoreboardLine... scores) {
+    public void setLines(boolean usePlaceholderAPI, Iterable<ScoreboardLine> scores) {
         if (checkHelper())
             return;
 
