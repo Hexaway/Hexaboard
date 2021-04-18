@@ -70,7 +70,10 @@ public final class BukkitScoreboardHandler {
         nmsScoreboardHelper.sendObjectiveChange(hidden, 2);
     }
 
-    public void setLines(boolean usePlaceholderAPI, Iterable<ScoreboardLine> scores) {
+    public void setLine(boolean usePlaceholderAPI, ScoreboardLine line) {
+        if (line == null)
+            return;
+
         if (checkHelper())
             return;
 
@@ -79,28 +82,23 @@ public final class BukkitScoreboardHandler {
         if (player == null)
             return;
 
-        for (ScoreboardLine line : scores) {
-            if (line == null)
-                continue;
+        int pos = line.position();
+        String fullText = usePlaceholderAPI ? PlaceholderAPI.setPlaceholders(player, line.get()) : line.get();
+        String oldText = this.scores.get(pos);
 
-            int pos = line.position();
-            String fullText = usePlaceholderAPI ? PlaceholderAPI.setPlaceholders(player, line.get()) : line.get();
-            String oldText = this.scores.get(pos);
+        // returns if the current text equal to an old text in the same position
+        if (fullText.equals(oldText))
+            return;
 
-            // returns if the current text equal to an old text in the same position
-            if (fullText.equals(oldText))
-                continue;
+        ScoreboardTeam scoreboardTeam = new ScoreboardTeam(fullText);
 
-            ScoreboardTeam scoreboardTeam = new ScoreboardTeam(fullText);
+        ScoreboardTeam oldTeam = null;
 
-            ScoreboardTeam oldTeam = null;
-
-            if (oldText != null) {
-                oldTeam = new ScoreboardTeam(oldText);
-            }
-
-            updateScore(fullText, oldTeam, scoreboardTeam, pos);
+        if (oldText != null) {
+            oldTeam = new ScoreboardTeam(oldText);
         }
+
+        updateScore(fullText, oldTeam, scoreboardTeam, pos);
     }
 
     public void removeScore(int pos) {
