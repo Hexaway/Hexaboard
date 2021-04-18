@@ -23,7 +23,7 @@ public final class BukkitScoreboardHandler {
 
     private Scoreboard scoreboard;
 
-    private Map<Integer, String> scores;
+    private Map<Integer, ScoreboardTeam> scores;
 
     private ObjectiveSwapper objectiveSwapper;
 
@@ -84,29 +84,23 @@ public final class BukkitScoreboardHandler {
 
         int pos = line.position();
         String fullText = usePlaceholderAPI ? PlaceholderAPI.setPlaceholders(player, line.get()) : line.get();
-        String oldText = this.scores.get(pos);
+        ScoreboardTeam oldTeam = this.scores.get(pos);
 
         // returns if the current text equal to an old text in the same position
-        if (fullText.equals(oldText))
+        if (oldTeam != null && fullText.equals(oldTeam.getFullText()))
             return;
 
         ScoreboardTeam scoreboardTeam = new ScoreboardTeam(fullText);
-
-        ScoreboardTeam oldTeam = null;
-
-        if (oldText != null) {
-            oldTeam = new ScoreboardTeam(oldText);
-        }
 
         updateScore(fullText, oldTeam, scoreboardTeam, pos);
     }
 
     public void removeScore(int pos) {
-        String text = scores.get(pos);
+        ScoreboardTeam scoreboardTeam = scores.get(pos);
 
-        if (text != null) {
-            scoreboard.resetScores(text);
-            scores.remove(pos, text);
+        if (scoreboardTeam != null) {
+            scoreboard.resetScores(scoreboardTeam.get());
+            scores.remove(pos, scoreboardTeam);
         }
     }
 
@@ -182,7 +176,7 @@ public final class BukkitScoreboardHandler {
         team.setPrefix(scoreboardTeam.getPrefix());
         team.setSuffix(scoreboardTeam.getSuffix());
 
-        this.scores.put(pos, fullText);
+        this.scores.put(pos, new ScoreboardTeam(fullText));
     }
 
     private Team getTeam(String teamText) {
