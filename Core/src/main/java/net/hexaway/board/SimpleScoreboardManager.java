@@ -2,9 +2,9 @@ package net.hexaway.board;
 
 import net.hexaway.board.abstraction.HexaBoard;
 import net.hexaway.board.abstraction.ScoreboardManager;
-import net.hexaway.board.repository.Repository;
 import net.hexaway.board.builder.ScoreboardModelBuilder;
 import net.hexaway.board.model.ScoreboardModel;
+import net.hexaway.board.repository.Repository;
 import net.hexaway.board.util.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

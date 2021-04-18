@@ -1,8 +1,8 @@
 package net.hexaway.board.repository;
 
+import net.hexaway.board.model.ScoreboardModel;
 import net.hexaway.board.repository.serialization.ScoreboardModelDeserializer;
 import net.hexaway.board.repository.serialization.ScoreboardModelSerializer;
-import net.hexaway.board.model.ScoreboardModel;
 import org.apache.commons.lang.Validate;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,7 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class YamlScoreboardModelRepository implements Repository<ScoreboardModel> {
 

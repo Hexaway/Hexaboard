@@ -1,10 +1,10 @@
 package net.hexaway.board.serialization.bukkit;
 
-import net.hexaway.board.repository.serialization.ScoreboardModelDeserializer;
 import net.hexaway.board.builder.ScoreboardModelBuilder;
 import net.hexaway.board.model.AnimatableObjectModel;
 import net.hexaway.board.model.AnimatedLineModel;
 import net.hexaway.board.model.ScoreboardModel;
+import net.hexaway.board.repository.serialization.ScoreboardModelDeserializer;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Map;

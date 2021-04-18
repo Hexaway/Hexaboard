@@ -1,7 +1,6 @@
 package net.hexaway.board.serialization.json.file;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 
 import java.io.*;
 

@@ -5,7 +5,8 @@ import net.hexaway.board.model.AnimatedLineModel;
 import net.hexaway.board.model.ScoreboardModel;
 import org.apache.commons.lang.Validate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScoreboardModelBuilder {
 
