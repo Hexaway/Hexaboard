@@ -41,4 +41,8 @@ public class ScoreboardTeam {
             applyProperties(text.substring(47));
         }
     }
+
+    public String getFullText() {
+        return prefix + text + suffix;
+    }
 }
