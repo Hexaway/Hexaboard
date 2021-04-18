@@ -5,7 +5,7 @@ import net.hexaway.board.abstraction.ScoreboardManager;
 import net.hexaway.board.repository.Repository;
 import net.hexaway.board.builder.ScoreboardModelBuilder;
 import net.hexaway.board.model.ScoreboardModel;
-import org.apache.commons.lang.Validate;
+import net.hexaway.board.util.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,8 +29,8 @@ public class SimpleScoreboardManager implements ScoreboardManager {
     private final boolean usePlaceholderAPI;
 
     public SimpleScoreboardManager(JavaPlugin javaPlugin, Repository<ScoreboardModel> scoreboardModelRepository, boolean usePlaceholderAPI) {
-        Validate.notNull(javaPlugin);
-        Validate.notNull(scoreboardModelRepository);
+        Validate.notNull(javaPlugin, "javaPlugin");
+        Validate.notNull(scoreboardModelRepository, "scoreboardModelRepository");
 
         this.scoreboardModelRepository = scoreboardModelRepository;
         this.scoreboardModelMap = new ConcurrentHashMap<>();
@@ -84,6 +84,14 @@ public class SimpleScoreboardManager implements ScoreboardManager {
     }
 
     @Override
+    public void registerScoreboard(UUID uuid, HexaBoard board) {
+        Validate.notNull(uuid, "uuid");
+        Validate.notNull(board, "board");
+
+        this.scoreboardMap.put(uuid, board);
+    }
+
+    @Override
     public void unregisterScoreboard(UUID uuid) {
         scoreboardMap.remove(uuid);
     }
@@ -115,8 +123,8 @@ public class SimpleScoreboardManager implements ScoreboardManager {
 
     @Override
     public void replace(String id, ScoreboardModel scoreboardModel) {
-        Validate.notNull(id);
-        Validate.notNull(scoreboardModel);
+        Validate.notNull(id, "id");
+        Validate.notNull(scoreboardModel, "scoreboardModel");
 
         scoreboardModelMap.replace(id, scoreboardModel);
     }
@@ -143,7 +151,7 @@ public class SimpleScoreboardManager implements ScoreboardManager {
 
     @Override
     public void registerModel(ScoreboardModelBuilder scoreboardModelBuilder) {
-        Validate.notNull(scoreboardModelBuilder);
+        Validate.notNull(scoreboardModelBuilder, "scoreboardModelBuilder");
 
         ScoreboardModel scoreboardModel = scoreboardModelBuilder.build();
 
