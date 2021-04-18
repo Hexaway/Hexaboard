@@ -113,7 +113,10 @@ public class SimpleHexaBoardImpl implements HexaBoard {
 
     @Override
     public void clearLines() {
-        new HashSet<>(lines.keySet()).forEach(this::removeLine);
+        int length = lines.keySet().size();
+        for (int i = 0; i <= length; i++) {
+            removeLine(i);
+        }
     }
 
     @Override
@@ -162,10 +165,11 @@ public class SimpleHexaBoardImpl implements HexaBoard {
 
         title.update();
 
-        Set<ScoreboardLine> lines = new HashSet<>(this.lines.values());
-        lines.forEach(ScoreboardLine::update);
-
-        bukkitScoreboardHandler.setLines(usePlaceholderAPI(), lines.toArray(new ScoreboardLine[0]));
+        Iterable<ScoreboardLine> lines = this.lines.values();
+        lines.forEach(scoreboardLine -> {
+            scoreboardLine.update();
+            bukkitScoreboardHandler.setLine(usePlaceholderAPI(), scoreboardLine);
+        });
 
         bukkitScoreboardHandler.setTitle(title.get());
     }
