@@ -1,8 +1,8 @@
 package net.hexaway.board.abstraction;
 
+import com.github.imthenico.repositoryhelper.core.repository.Repository;
 import net.hexaway.board.builder.ScoreboardModelBuilder;
 import net.hexaway.board.model.ScoreboardModel;
-import net.hexaway.board.repository.Repository;
 import org.bukkit.entity.Player;
 
 import java.util.Map;

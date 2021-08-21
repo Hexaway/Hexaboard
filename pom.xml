@@ -11,7 +11,6 @@
     <modules>
         <module>Core</module>
         <module>Bukkit</module>
-        <module>Json</module>
     </modules>
 
     <properties>
@@ -32,6 +31,13 @@
             <artifactId>spigot-api</artifactId>
             <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.imthenico.repositoryhelper</groupId>
+            <artifactId>Core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
