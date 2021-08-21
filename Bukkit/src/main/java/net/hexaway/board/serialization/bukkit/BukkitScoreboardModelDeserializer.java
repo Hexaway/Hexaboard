@@ -1,19 +1,25 @@
 package net.hexaway.board.serialization.bukkit;
 
+import com.github.imthenico.repositoryhelper.core.serialization.Deserializer;
 import net.hexaway.board.builder.ScoreboardModelBuilder;
 import net.hexaway.board.model.AnimatableObjectModel;
 import net.hexaway.board.model.AnimatedLineModel;
 import net.hexaway.board.model.ScoreboardModel;
-import net.hexaway.board.repository.serialization.ScoreboardModelDeserializer;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BukkitScoreboardModelDeserializer implements ScoreboardModelDeserializer<Map<String, Object>> {
+public class BukkitScoreboardModelDeserializer implements Deserializer<Map<String, Object>, ScoreboardModel> {
 
     @Override
-    public ScoreboardModel deserializeBoard(Map<String, Object> dataType) throws IllegalArgumentException {
+    @SuppressWarnings("unchecked")
+    public ScoreboardModel deserialize(Object input) throws IllegalArgumentException {
+        if (!dataInputType().isInstance(input))
+            return null;
+
+        Map<String, Object> dataType = (Map<String, Object>) input;
+
         if (!dataType.containsKey("id"))
             throw new IllegalArgumentException("dataType does not have id key");
 
@@ -41,7 +47,8 @@ public class BukkitScoreboardModelDeserializer implements ScoreboardModelDeseria
         return builder.build();
     }
 
-    private Map<String, Object> asMap(Object o) {
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> asMap(Object o) {
         if (o instanceof Map) {
             return (Map<String, Object>) o;
         } else if (o instanceof ConfigurationSection) {
@@ -51,7 +58,7 @@ public class BukkitScoreboardModelDeserializer implements ScoreboardModelDeseria
         throw new IllegalArgumentException("unexpected value");
     }
 
-    private AnimatableObjectModel asAnimatableObject(Object o) {
+    private static AnimatableObjectModel asAnimatableObject(Object o) {
         if (o instanceof AnimatableObjectModel) {
             return (AnimatableObjectModel) o;
         } else if (o instanceof Map) {
@@ -61,5 +68,16 @@ public class BukkitScoreboardModelDeserializer implements ScoreboardModelDeseria
         }
 
         throw new IllegalArgumentException("unexpected value");
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Class<Map<String, Object>> dataInputType() {
+        return (Class<Map<String, Object>>) (Class) Map.class;
+    }
+
+    @Override
+    public Class<ScoreboardModel> dataOutputType() {
+        return ScoreboardModel.class;
     }
 }
