@@ -4,19 +4,15 @@ import net.hexaway.board.tick.TickableCounter;
 
 public final class DynamicText {
 
-    private String[] textLines;
+    private final String[] textLines;
 
-    private TickableCounter tickableCounter;
+    private final TickableCounter tickableCounter;
 
     private int index = 0;
 
     public DynamicText(int updateTime, String... textLines) {
         this.textLines = textLines;
         this.tickableCounter = new TickableCounter(updateTime);
-    }
-
-    DynamicText() {
-
     }
 
     public String getNextLine() {
