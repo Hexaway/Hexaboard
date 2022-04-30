@@ -1,6 +1,5 @@
 package net.hexaway.board.abstraction;
 
-import com.github.imthenico.repositoryhelper.core.repository.Repository;
 import net.hexaway.board.builder.ScoreboardModelBuilder;
 import net.hexaway.board.model.ScoreboardModel;
 import org.bukkit.entity.Player;
@@ -53,10 +52,6 @@ public interface ScoreboardManager {
     boolean usePlaceholderAPI();
 
     boolean exists(String id);
-
-    Repository<ScoreboardModel> getScoreboardRepository();
-
-    void saveModels();
 
     void stop();
 

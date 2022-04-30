@@ -1,6 +1,5 @@
 package net.hexaway.board;
 
-import com.github.imthenico.repositoryhelper.core.repository.Repository;
 import net.hexaway.board.abstraction.HexaBoard;
 import net.hexaway.board.abstraction.ScoreboardManager;
 import net.hexaway.board.builder.ScoreboardModelBuilder;
@@ -20,31 +19,15 @@ public class SimpleScoreboardManager implements ScoreboardManager {
 
     private final Map<UUID, HexaBoard> scoreboardMap;
 
-    private Repository<ScoreboardModel> scoreboardModelRepository;
-
     private final JavaPlugin javaPlugin;
 
     private BukkitTask bukkitTask;
 
     private final boolean usePlaceholderAPI;
 
-    public SimpleScoreboardManager(JavaPlugin javaPlugin, Repository<ScoreboardModel> scoreboardModelRepository, boolean usePlaceholderAPI) {
-        Validate.notNull(javaPlugin, "javaPlugin");
-        Validate.notNull(scoreboardModelRepository, "scoreboardModelRepository");
-
-        this.scoreboardModelRepository = scoreboardModelRepository;
-        this.scoreboardModelMap = new ConcurrentHashMap<>();
-        this.scoreboardMap = new ConcurrentHashMap<>();
-        this.usePlaceholderAPI = checkPlaceholderAPI(usePlaceholderAPI);
-
-        scoreboardModelRepository.findAll().forEach(scoreboardModel ->
-                registerModel(scoreboardModel.getId(), scoreboardModel));
-
-        this.javaPlugin = javaPlugin;
-        start();
-    }
-
     public SimpleScoreboardManager(JavaPlugin javaPlugin, boolean usePlaceholderAPI) {
+        Validate.notNull(javaPlugin, "javaPlugin");
+
         this.scoreboardModelMap = new ConcurrentHashMap<>();
         this.scoreboardMap = new ConcurrentHashMap<>();
         this.usePlaceholderAPI = checkPlaceholderAPI(usePlaceholderAPI);
@@ -156,18 +139,6 @@ public class SimpleScoreboardManager implements ScoreboardManager {
         ScoreboardModel scoreboardModel = scoreboardModelBuilder.build();
 
         registerModel(scoreboardModel.getId(), scoreboardModel);
-    }
-
-    @Override
-    public Repository<ScoreboardModel> getScoreboardRepository() {
-        return scoreboardModelRepository;
-    }
-
-    @Override
-    public void saveModels() {
-        Validate.notNull(scoreboardModelRepository, "no repository provided");
-
-        scoreboardModelMap.forEach((s, scoreboardModel) -> scoreboardModelRepository.save(s, scoreboardModel));
     }
 
     @Override
