@@ -238,6 +238,9 @@ public class SimpleBoardImpl implements SimpleBoard {
     public void reShow() {
         checkState();
 
+        objectiveHandler.create(title);
+        objectiveHandler.display();
+
         LineHandler.Context[] copy = Arrays.copyOf(contexts, contexts.length);
 
         Arrays.fill(contexts, null);
