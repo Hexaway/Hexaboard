@@ -93,13 +93,13 @@ public class SimpleComplexBoardManager implements ComplexBoardManager {
     private void updateScoreboards() {
         Iterator<Map.Entry<UUID, ComplexBoard>> iterator = scoreboardMap.entrySet().iterator();
 
-        if (iterator.hasNext()) {
+        while (iterator.hasNext()) {
             Map.Entry<UUID, ComplexBoard> entry = iterator.next();
 
             ComplexBoard board = entry.getValue();
 
             if (board.getPlayer() == null) {
-                return;
+                continue;
             }
 
             try {
