@@ -1,4 +1,4 @@
-package net.hexaway.board.model;
+package net.hexaway.board.abstraction.model;
 
 import net.hexaway.board.abstraction.ScoreboardElement;
 
