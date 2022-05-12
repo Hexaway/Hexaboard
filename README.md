@@ -7,7 +7,7 @@ A simple library to make no flicker scoreboards.
   - Easy and simple boards to handle them as you want
   - Board limitations (line and title length) determined by player protocol (Using ClientStats)
 ## Tested versions:
-  - 1.8
+- 1.8
   - 1.17
 ## Limitations
 ### 1.8 - 1.12
