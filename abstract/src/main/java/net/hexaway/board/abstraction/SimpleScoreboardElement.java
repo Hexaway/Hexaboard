@@ -55,9 +55,6 @@ public class SimpleScoreboardElement implements ScoreboardElement {
 
     @Override
     public boolean update() {
-        if (queue.limit() == 1)
-            return false;
-
         currentTickCounter.elapse();
 
         if (currentTickCounter.isFinished()) {
