@@ -34,7 +34,9 @@ public class SimpleComplexBoard extends SimpleBoardImpl implements ComplexBoard 
     @Override
     public ScoreboardElement setComplexTitle(ScoreboardElement element) {
         ScoreboardElement temp = title;
+
         this.title = requireNonNull(element);
+        setTitle(title.getCurrentFrameContent());
 
         return temp;
     }
